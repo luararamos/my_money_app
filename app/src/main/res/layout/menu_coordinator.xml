@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="#03A9F4"
+        app:fabCradleRoundedCornerRadius="16dp"
+        app:fabAlignmentMode="center"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/img_btn_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_visibility"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" />
+
+            <ImageView
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/img_btn_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible"/>
+
+            <ImageView
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/img_btn_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_visibility"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"/>
+
+
+        </LinearLayout>
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        app:layout_anchor="@id/bottomAppBar"
+        android:contentDescription="@null" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

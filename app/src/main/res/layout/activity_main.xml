@@ -2,15 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#dddddd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#03A9F4"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_wallet"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_margin="10dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,13 +33,13 @@
                 android:id="@+id/txt_wallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="RS 4.500,0"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/img_visibility"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="RS 4.500,0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/img_visibility"
@@ -47,73 +57,18 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_items_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/view"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_wallet"
         tools:itemCount="4"
         tools:listitem="@layout/item_bills" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#03A9F4"
-        app:layout_constraintBottom_toBottomOf="parent" />
+    <include layout="@layout/menu_coordinator"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:backgroundTint="#FFC107"
-            app:cardCornerRadius="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_add" />
-
-        </androidx.cardview.widget.CardView>
-
-
-        <ImageView
-            android:id="@+id/img_auto_bills"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginHorizontal="64dp"
-            android:layout_marginBottom="14dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_visibility"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/img_monthly_expense"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/img_monthly_expense"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginHorizontal="64dp"
-            android:layout_marginBottom="14dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_visibility"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_auto_bills" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
