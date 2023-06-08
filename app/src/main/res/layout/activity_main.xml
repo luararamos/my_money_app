@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#dddddd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -11,7 +10,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#03A9F4"
+        android:background="@color/md_theme_dark_secondaryContainer"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.cardview.widget.CardView
@@ -20,6 +19,7 @@
         android:layout_height="100dp"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="50dp"
+        android:backgroundTint="@color/md_theme_dark_inversePrimary"
         app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="RS 4.500,0"
                 android:textSize="22sp"
+                android:textColor="@color/md_theme_dark_onSecondaryContainer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/img_visibility"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -46,6 +47,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_visibility"
+                app:tint="@color/md_theme_dark_onSecondaryContainer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/txt_wallet"
