@@ -18,7 +18,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return 35
     }
 
     inner class ListViewHolder(itemView: View) : ViewHolder(itemView) {

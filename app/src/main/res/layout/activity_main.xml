@@ -1,76 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <View
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/md_theme_dark_secondaryContainer"
-        app:layout_constraintTop_toTopOf="parent"/>
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_height="80dp"
+        android:background="?attr/colorSurfaceVariant"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_wallet"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="50dp"
-        android:backgroundTint="@color/md_theme_dark_inversePrimary"
         app:cardCornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:background="@android:color/transparent"
+            android:hint="Saldo"
+            android:src="@drawable/ic_visibility"
+            android:textColorHint="?attr/colorControlNormal"
+            app:boxStrokeColor="@android:color/transparent"
+            app:hintTextColor="?attr/colorOnPrimaryContainer"
+            app:passwordToggleEnabled="true">
 
-            <TextView
-                android:id="@+id/txt_wallet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RS 4.500,0"
-                android:textSize="22sp"
-                android:textColor="@color/md_theme_dark_onSecondaryContainer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/img_visibility"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:inputType="number" />
 
-            <ImageView
-                android:id="@+id/img_visibility"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_visibility"
-                app:tint="@color/md_theme_dark_onSecondaryContainer"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txt_wallet"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </com.google.android.material.textfield.TextInputLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_items_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_wallet"
-        tools:itemCount="4"
-        tools:listitem="@layout/item_bills" />
 
-    <include layout="@layout/menu_coordinator"/>
+    <include
+        android:id="@+id/include"
+        layout="@layout/menu_coordinator" />
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
