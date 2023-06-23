@@ -8,8 +8,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/view"
-        android:layout_width="match_parent"
         style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="?attr/colorSurfaceVariant"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,29 +19,40 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginHorizontal="32dp"
-        app:cardCornerRadius="15dp"
         android:layout_marginTop="16dp"
-        app:cardBackgroundColor="?attr/colorPrimaryContainer">
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
+        app:cardCornerRadius="15dp">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:background="@android:color/transparent"
-            android:hint="Saldo"
-            android:src="@drawable/ic_visibility"
-            android:textColorHint="?attr/colorControlNormal"
-            app:boxStrokeColor="@android:color/transparent"
-            app:hintTextColor="?attr/colorOnPrimaryContainer"
-            app:passwordToggleEnabled="true">
+            android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_wallet"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:inputType="number" />
+            <TextView
+                android:id="@+id/text_cv_wallet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="R$"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_visibility"
+                app:layout_constraintHorizontal_weight="4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:id="@+id/img_visibility"
+                android:layout_width="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_visibility_gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/text_cv_wallet"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
 
