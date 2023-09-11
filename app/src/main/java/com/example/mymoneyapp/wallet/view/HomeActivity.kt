@@ -1,13 +1,12 @@
-package com.example.mymoneyapp
+package com.example.mymoneyapp.wallet.view
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.mymoneyapp.presentation.HomePresenter
+import com.example.mymoneyapp.R
+import com.example.mymoneyapp.wallet.data.Statement
+import com.example.mymoneyapp.wallet.data.App
+import com.example.mymoneyapp.wallet.presentation.HomePresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeActivity : AppCompatActivity() {

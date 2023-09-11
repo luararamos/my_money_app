@@ -1,4 +1,4 @@
-package com.example.mymoneyapp.statement
+package com.example.mymoneyapp.wallet
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity"
+    tools:context=".wallet.view.HomeActivity"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -63,7 +63,7 @@
     <fragment
         android:id="@+id/main_fragment"
         tools:layout="@layout/fragment_statement"
-        android:name="com.example.mymoneyapp.StatementFragment"
+        android:name="com.example.mymoneyapp.wallet.view.WalletFragment"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="FragmentTagUsage" />

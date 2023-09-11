@@ -1,6 +1,6 @@
-package com.example.mymoneyapp.presentation
+package com.example.mymoneyapp.wallet.presentation
 
-import com.example.mymoneyapp.HomeActivity
+import com.example.mymoneyapp.wallet.view.HomeActivity
 
 class HomePresenter(private val view: HomeActivity){
     fun banana(): String{
