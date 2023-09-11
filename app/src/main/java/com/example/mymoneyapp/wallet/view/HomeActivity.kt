@@ -1,13 +1,14 @@
-package com.example.mymoneyapp
+package com.example.mymoneyapp.wallet.view
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.mymoneyapp.presentation.HomePresenter
+import com.example.mymoneyapp.R
+import com.example.mymoneyapp.wallet.presentation.HomePresenter
+import com.example.mymoneyapp.wallet.data.App
+import com.example.mymoneyapp.wallet.data.Statement
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeActivity : AppCompatActivity() {
@@ -16,21 +17,21 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         window.statusBarColor = getColor(R.color.md_theme_dark_background)
-//        val txtWallet = findViewById<TextView>(R.id.text_cv_wallet)
-//        val imgWallet = findViewById<ImageView>(R.id.img_visibility)
+        val txtWallet = findViewById<TextView>(R.id.text_cv_wallet)
+        val imgWallet = findViewById<ImageView>(R.id.img_visibility)
         val fab = findViewById<FloatingActionButton>(R.id.fab)
-//        presenter = HomePresenter(this)
-//
-//        imgWallet.setOnClickListener {
-//            if (txtWallet.text.toString() != "*****") {
-//                txtWallet.text = "*****"
-//                imgWallet.setImageResource(R.drawable.ic_visibility)
-//            } else {
-//                txtWallet.text = presenter.banana()
-//                imgWallet.setImageResource(R.drawable.ic_visibility_gone)
-//
-//            }
-//        }
+        presenter = HomePresenter(this)
+
+        imgWallet.setOnClickListener {
+            if (txtWallet.text.toString() != "*****") {
+                txtWallet.text = "*****"
+                imgWallet.setImageResource(R.drawable.ic_visibility)
+            } else {
+                txtWallet.text = presenter.banana()
+                imgWallet.setImageResource(R.drawable.ic_visibility_gone)
+
+            }
+        }
 
         fab.setOnClickListener {
             Thread {
