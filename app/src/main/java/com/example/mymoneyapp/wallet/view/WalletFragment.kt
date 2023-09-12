@@ -11,7 +11,7 @@ import com.example.mymoneyapp.R
 
 class WalletFragment: Fragment() {
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
-        val view =  inflater.inflate(R.layout.fragment_statement, container, false)
+        val view =  inflater.inflate(R.layout.fragment_wallet, container, false)
         val rv = view?.findViewById<RecyclerView>(R.id.rv_items_list)
         rv?.adapter = ListAdapter()
         rv?.layoutManager = LinearLayoutManager(context)

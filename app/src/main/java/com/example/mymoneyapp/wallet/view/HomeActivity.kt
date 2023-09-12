@@ -6,10 +6,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mymoneyapp.R
-import com.example.mymoneyapp.wallet.data.Statement
-import com.example.mymoneyapp.wallet.data.App
 import com.example.mymoneyapp.wallet.presentation.HomePresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.mymoneyapp.wallet.data.Statement
+import com.example.mymoneyapp.wallet.data.App
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var presenter: HomePresenter
