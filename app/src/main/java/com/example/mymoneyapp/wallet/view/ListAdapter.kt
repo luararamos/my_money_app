@@ -1,10 +1,11 @@
-package com.example.mymoneyapp
+package com.example.mymoneyapp.wallet.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.mymoneyapp.R
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {

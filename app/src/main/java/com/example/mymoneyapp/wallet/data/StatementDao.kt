@@ -1,9 +1,10 @@
-package com.example.mymoneyapp
+package com.example.mymoneyapp.wallet.data
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
+import com.example.mymoneyapp.wallet.data.Statement
 
 @Dao
 interface StatementDao {

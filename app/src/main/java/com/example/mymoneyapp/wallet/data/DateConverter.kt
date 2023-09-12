@@ -1,4 +1,4 @@
-package com.example.mymoneyapp
+package com.example.mymoneyapp.wallet.data
 
 import androidx.room.TypeConverter
 import java.util.Date
