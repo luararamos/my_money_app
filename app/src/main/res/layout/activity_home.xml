@@ -95,13 +95,17 @@
 
     </androidx.cardview.widget.CardView>
 
-    <fragment
-        android:id="@+id/fragment_wallet_list"
-        android:name="com.example.mymoneyapp.wallet.view.WalletFragment"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_items_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        tools:layout="@layout/fragment_wallet" />
+        android:layout_marginTop="32dp"
+        android:clipToPadding="false"
+        android:padding="16dp"
+        tools:itemCount="30"
+        tools:listitem="@layout/item_bills" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
