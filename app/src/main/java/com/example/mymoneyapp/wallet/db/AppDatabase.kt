@@ -1,4 +1,4 @@
-package com.example.mymoneyapp.wallet.data
+package com.example.mymoneyapp.wallet.db
 
 import android.content.Context
 import androidx.room.Database
@@ -29,6 +29,10 @@ abstract class AppDatabase : RoomDatabase() {
             } else{
                 INSTANCE as AppDatabase
             }
+        }
+
+        fun getInstanceWithoutContext(): AppDatabase{
+            return INSTANCE!!
         }
     }
 }
