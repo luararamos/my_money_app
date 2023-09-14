@@ -52,6 +52,12 @@ class HomeActivity : AppCompatActivity(), Wallet.View {
 
 
     }
+
+    override fun onRestart() {
+        super.onRestart()
+        presenter.findStatements()
+    }
+    
     override fun showStatement(response: List<Statement>) {
         binding.rvItemsList.adapter = ListAdapter(response)
     }

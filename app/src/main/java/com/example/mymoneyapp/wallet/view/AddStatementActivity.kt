@@ -1,7 +1,9 @@
 package com.example.mymoneyapp.wallet.view
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.common.DependencyInjector
@@ -25,12 +27,20 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, items)
         binding.autoType.setAdapter(adapter)
 
+        binding.autoType.setOnClickListener {
+            val keyboardService =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboardService.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        }
+
 
         presenter = StatementPresenter(this, DependencyInjector.walletRepository(this))
         binding.btnAddStatement.setOnClickListener {
-            val money = binding.etAddMoney.text.toDouble()
+            val money = binding.etAddMoney.text.toString().toDouble()
             val description = binding.etDescription.text.toString()
-            presenter.addStatement(Statement(type = "earn", money = money, description = description))
+            val type = autocompleteConvert(binding.autoType.toString())
+            presenter.addStatement(Statement(type = type, money = money, description = description))
+            finish()
         }
 
     }
@@ -38,8 +48,8 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
     fun autocompleteConvert(s: String): String{
         return when (s) {
             "Ativo"-> "earn"
-            "Passivo" -> ""
-            else -> ""
+            "Passivo" -> "spend"
+            else -> "earn"
         }
     }
 
