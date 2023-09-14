@@ -28,10 +28,12 @@ class ListAdapter(private val list: List<Statement>) : RecyclerView.Adapter<List
     inner class ListViewHolder(itemView: View) : ViewHolder(itemView) {
         fun bind(item : Statement) {
             val textDescription: TextView = itemView.findViewById(R.id.txt_description_bill)
-            val textValue: TextView = itemView.findViewById(R.id.txt_description_bill)
+            val textValue: TextView = itemView.findViewById(R.id.txt_money)
 
             textDescription.text = item.description
-            textValue.text = item.money.toString()
+            val doubleNum = item.money
+            textValue.text = String.format("R$ %.2f", doubleNum)
+
 
 
         }
