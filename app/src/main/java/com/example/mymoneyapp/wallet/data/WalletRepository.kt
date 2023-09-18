@@ -15,4 +15,8 @@ class WalletRepository( context : Context) {
     fun findStatements(type: String): Single<List<Statement>> {
         return dao.getStatement(type)
     }
+
+    fun findAllStatement(): Single<List<Statement>>{
+        return  dao.getAllStatement()
+    }
 }

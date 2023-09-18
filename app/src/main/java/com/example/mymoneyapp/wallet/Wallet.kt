@@ -8,7 +8,7 @@ interface Wallet {
 
     // camada presenter
     interface Presenter : BasePresenter {
-        fun findStatements()
+        fun findStatements(type:String? = null)
         fun addStatement(statement: Statement)
     }
 
