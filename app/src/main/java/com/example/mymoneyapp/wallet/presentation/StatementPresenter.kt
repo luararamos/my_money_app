@@ -12,18 +12,32 @@ class StatementPresenter(
     private var repository: WalletRepository
 ) : Wallet.Presenter {
     @SuppressLint("CheckResult")
-    override fun findStatements() {
-        repository.findStatements("earn")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::onGetNotes,
-                this::onStatementFail
-            )
+    override fun findStatements(type: String?) {
+        when (type) {
+            null -> {
+                repository.findAllStatement()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        this::onGetNotes,
+                        this::onStatementFail
+                    )
+            }
+            else -> {
+                repository.findStatements(type)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        this::onGetNotes,
+                        this::onStatementFail
+                    )
+
+            }
+        }
 
     }
 
-    override fun addStatement( statement: Statement) {
+    override fun addStatement(statement: Statement) {
         repository.insertStatement(statement)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -33,11 +47,12 @@ class StatementPresenter(
     override fun onDestroy() {
         view = null
     }
-    private fun onGetNotes(listOfStatemnt: List<Statement>){
+
+    private fun onGetNotes(listOfStatemnt: List<Statement>) {
         view?.showStatement(listOfStatemnt)
     }
 
-    private fun onStatementFail(t: Throwable){
+    private fun onStatementFail(t: Throwable) {
         view?.showFailure(t.message.toString())
     }
 

@@ -23,4 +23,7 @@ interface StatementDao {
     @Query("SELECT * FROM Statement WHERE type = :type")
     fun getStatement(type: String) : Single<List<Statement>>
 
+    @Query("SELECT * FROM Statement")
+    fun getAllStatement() : Single<List<Statement>>
+
 }
