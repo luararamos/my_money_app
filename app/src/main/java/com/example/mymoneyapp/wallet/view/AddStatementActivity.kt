@@ -38,7 +38,7 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
         binding.btnAddStatement.setOnClickListener {
             val money = binding.etAddMoney.text.toString().toDouble()
             val description = binding.etDescription.text.toString()
-            val type = autocompleteConvert(binding.autoType.toString())
+            val type = autocompleteConvert(binding.autoType.text.toString())
             presenter.addStatement(Statement(type = type, money = money, description = description))
             finish()
         }
@@ -49,7 +49,7 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
         return when (s) {
             "Ativo"-> "earn"
             "Passivo" -> "spend"
-            else -> "earn"
+            else -> ""
         }
     }
 

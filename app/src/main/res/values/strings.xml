@@ -4,4 +4,7 @@
     <string name="hint_money">Dinheiro (R$ 50,00)</string>
     <string name="hint_type">Tipo</string>
     <string name="hint_description">Descrição</string>
+    <string name="home">Home</string>
+    <string name="earn">Earn</string>
+    <string name="spend">Spend</string>
 </resources>
