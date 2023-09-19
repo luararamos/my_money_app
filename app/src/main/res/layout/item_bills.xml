@@ -4,12 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     style="@style/Widget.Material3.CardView.Filled"
+    app:cardCornerRadius="8dp"
     android:layout_height="50dp"
     android:layout_margin="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_type_statement"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            tools:src="@drawable/ic_earn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_description_bill"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/txt_description_bill"
@@ -22,7 +34,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txt_money"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_type_statement"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -35,6 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_description_bill"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
