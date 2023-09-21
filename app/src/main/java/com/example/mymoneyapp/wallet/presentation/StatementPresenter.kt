@@ -11,6 +11,14 @@ class StatementPresenter(
     private var view: Wallet.View?,
     private var repository: WalletRepository
 ) : Wallet.Presenter {
+
+
+    override fun deleteStatement(statementId: Int){
+        repository.deleteStatement(statementId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+    }
     @SuppressLint("CheckResult")
     override fun findStatements(type: String?) {
         when (type) {
@@ -43,6 +51,20 @@ class StatementPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
+    @SuppressLint("CheckResult")
+    override fun findAccountBalance() {
+        repository.accountBalance()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                this::onGetAccountBalance,
+                this::onStatementFail
+            )
+    }
+
+    private fun onGetAccountBalance(d: Double?) {
+        view?.showAccountBalance(d)
+    }
 
     override fun onDestroy() {
         view = null
@@ -51,6 +73,7 @@ class StatementPresenter(
     private fun onGetNotes(listOfStatemnt: List<Statement>) {
         view?.showStatement(listOfStatemnt)
     }
+
 
     private fun onStatementFail(t: Throwable) {
         view?.showFailure(t.message.toString())

@@ -7,4 +7,7 @@
     <string name="home">Home</string>
     <string name="earn">Earn</string>
     <string name="spend">Spend</string>
+    <string name="delete_message">Deseja excluir esse valor?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Excluir</string>
 </resources>

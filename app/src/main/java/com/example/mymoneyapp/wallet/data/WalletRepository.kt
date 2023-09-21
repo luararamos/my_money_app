@@ -12,11 +12,20 @@ class WalletRepository( context : Context) {
     fun insertStatement(statement: Statement): Completable {
         return dao.insert(statement)
     }
+
+    fun deleteStatement(statementId: Int): Completable {
+
+        return dao.delete(statementId)
+    }
     fun findStatements(type: String): Single<List<Statement>> {
         return dao.getStatement(type)
     }
 
     fun findAllStatement(): Single<List<Statement>>{
         return  dao.getAllStatement()
+    }
+
+    fun accountBalance(): Single<Double>{
+        return dao.getSumEarn()
     }
 }

@@ -56,6 +56,10 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
     override fun showStatement(response: List<Statement>) {
     }
 
+    override fun showAccountBalance(totalValue: Double?) {
+    }
+
+
     override fun showProgress() {
     }
 
