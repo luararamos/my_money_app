@@ -1,9 +1,8 @@
 package com.example.mymoneyapp.wallet.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mymoneyapp.R
@@ -13,7 +12,7 @@ import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
 import com.example.mymoneyapp.wallet.presentation.StatementPresenter
 
-class HomeActivity : AppCompatActivity(), Wallet.View {
+class HomeActivity : AppCompatActivity(), Wallet.View, OnListClickListener {
     override lateinit var presenter: Wallet.Presenter
     private lateinit var binding: ActivityHomeBinding
     private lateinit var adapter: ListAdapter
@@ -30,8 +29,22 @@ class HomeActivity : AppCompatActivity(), Wallet.View {
 
         presenter = StatementPresenter(this, DependencyInjector.walletRepository(this))
         presenter.findStatements()
+        presenter.findAccountBalance()
 
 
+    }
+
+    private fun setAlertDialog(statementId: Int) {
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.delete_message))
+            .setNegativeButton(R.string.cancel) {  dialog, which ->
+
+            }
+            .setPositiveButton(R.string.delete){  dialog, which ->
+                presenter.deleteStatement(statementId)
+            }
+            .create()
+            .show()
     }
 
     private fun setOnClicks() {
@@ -47,14 +60,17 @@ class HomeActivity : AppCompatActivity(), Wallet.View {
                     presenter.findStatements()
                     true
                 }
+
                 R.id.earn -> {
                     presenter.findStatements("earn")
                     true
                 }
+
                 R.id.spend -> {
                     presenter.findStatements("spend")
                     true
                 }
+
                 else -> true
             }
 
@@ -79,7 +95,7 @@ class HomeActivity : AppCompatActivity(), Wallet.View {
 
     private fun setRecyclerView() {
         val result = mutableListOf<Statement>()
-        adapter = ListAdapter(result)
+        adapter = ListAdapter(result, this)
         binding.rvItemsList.adapter = adapter
         binding.rvItemsList.layoutManager = LinearLayoutManager(this)
     }
@@ -87,11 +103,17 @@ class HomeActivity : AppCompatActivity(), Wallet.View {
     override fun onRestart() {
         super.onRestart()
         presenter.findStatements()
+        presenter.findAccountBalance()
     }
 
     override fun showStatement(response: List<Statement>) {
-        binding.rvItemsList.adapter = ListAdapter(response)
+        binding.rvItemsList.adapter = ListAdapter(response, this)
     }
+
+    override fun showAccountBalance(totalValue: Double?) {
+        binding.textCvWallet.text = totalValue.toString()
+    }
+
 
     override fun showProgress() {
     }
@@ -100,5 +122,9 @@ class HomeActivity : AppCompatActivity(), Wallet.View {
     }
 
     override fun showFailure(message: String) {
+    }
+
+    override fun onClickDelete(id: Int, type: String) {
+        setAlertDialog(id)
     }
 }

@@ -10,11 +10,16 @@ interface Wallet {
     interface Presenter : BasePresenter {
         fun findStatements(type:String? = null)
         fun addStatement(statement: Statement)
+
+        fun findAccountBalance()
+
+        fun deleteStatement(statementId: Int)
     }
 
     // camada de view
     interface View : BaseView<Presenter> {
         fun showStatement(response: List<Statement>)
+        fun showAccountBalance(totalValue: Double?)
         fun showProgress()
         fun hideProgress()
         fun showFailure(message: String)

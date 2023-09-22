@@ -13,7 +13,8 @@ import com.example.mymoneyapp.R
 import com.example.mymoneyapp.wallet.db.Statement
 
 class ListAdapter(
-    private val list: List<Statement>
+    private val list: List<Statement>,
+    private val listener: OnListClickListener?
 ) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_bills, parent, false)
@@ -43,6 +44,10 @@ class ListAdapter(
                 "earn" -> imgTypeStatement.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_earn))
                 "spend" -> imgTypeStatement.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_spend))
                 else -> imgTypeStatement.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.ic_add))
+            }
+
+            itemView.setOnClickListener {
+                listener?.onClickDelete(item.id, item.type)
             }
 
 
