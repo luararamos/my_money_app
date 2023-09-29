@@ -10,6 +10,7 @@ import com.example.mymoneyapp.common.DependencyInjector
 import com.example.mymoneyapp.databinding.ActivityAddStatementBinding
 import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
+import com.example.mymoneyapp.wallet.db.User
 import com.example.mymoneyapp.wallet.presentation.StatementPresenter
 
 class AddStatementActivity : AppCompatActivity(), Wallet.View {
@@ -34,7 +35,7 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
         }
 
 
-        presenter = StatementPresenter(this, DependencyInjector.walletRepository(this))
+        presenter = StatementPresenter(view = this, viewHome = null,repository = DependencyInjector.walletRepository(this))
         binding.btnAddStatement.setOnClickListener {
             val money = binding.etAddMoney.text.toString().toDouble()
             val description = binding.etDescription.text.toString()
@@ -44,7 +45,6 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
         }
 
     }
-
     fun autocompleteConvert(s: String): String{
         return when (s) {
             "Ativo"-> "earn"
@@ -52,14 +52,6 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
             else -> ""
         }
     }
-
-    override fun showStatement(response: List<Statement>) {
-    }
-
-    override fun showAccountBalance(totalValue: Double?) {
-    }
-
-
     override fun showProgress() {
     }
 

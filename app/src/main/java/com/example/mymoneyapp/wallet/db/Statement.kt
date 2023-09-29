@@ -11,5 +11,5 @@ data class Statement(
     @ColumnInfo(name = "type") val type: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "money") val money: Double,
-    @ColumnInfo(name = "created_date") val createdDate: Date = Date(),
+    @ColumnInfo(name = "created_date") val createdDate: Date = Date()
 )

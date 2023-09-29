@@ -6,11 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Statement::class], version = 1)
+@Database(entities = [Statement::class, User::class], version = 1)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun statementDao(): StatementDao
+    abstract fun userDao(): UserDao
 
     companion object {
 
