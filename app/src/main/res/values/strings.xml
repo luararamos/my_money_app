@@ -10,4 +10,8 @@
     <string name="delete_message">Deseja excluir esse valor?</string>
     <string name="cancel">Cancelar</string>
     <string name="delete">Excluir</string>
+    <string name="add_name_user"> Qual seu nome?</string>
+    <string name="user_name">Ex: Ana Luisa</string>
+    <string name="txtearn">Ganhei</string>
+    <string name="txtspend">Gasto</string>
 </resources>
