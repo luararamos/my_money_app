@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import com.example.mymoneyapp.R
+import com.example.mymoneyapp.common.CurrencyTextWatcher
 import com.example.mymoneyapp.common.DependencyInjector
 import com.example.mymoneyapp.databinding.ActivityAddStatementBinding
 import com.example.mymoneyapp.wallet.Wallet
@@ -24,6 +25,8 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
         binding = ActivityAddStatementBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.etAddMoney.addTextChangedListener(watcher)
+
         presenter = StatementPresenter(view = this, viewHome = null,repository = DependencyInjector.walletRepository(this))
         binding.btnAddStatement.setOnClickListener {
             val money = binding.etAddMoney.text.toString().toDouble()
@@ -35,7 +38,11 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
             finish()
         }
 
+
+
     }
+
+
     fun autocompleteConvert(s: String): String{
         return when (s) {
             getString(R.string.txtearn)-> "earn"
@@ -43,21 +50,8 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
             else -> ""
         }
     }
-    fun onRadioButtonClicked(view: View) {
-        if (view is RadioButton) {
-            val checked = view.isChecked
-            when (view.getId()) {
-                R.id.radio_earn ->
-                    if (checked) {
-                        "earn"
-                    }
-                R.id.radio_spend ->
-                    if (checked) {
-                        "spend"
-                    }
-            }
-        }
-    }
+
+    private val watcher = CurrencyTextWatcher()
 
     override fun showProgress() {
     }
