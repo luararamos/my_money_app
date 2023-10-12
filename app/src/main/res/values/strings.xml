@@ -12,6 +12,6 @@
     <string name="delete">Excluir</string>
     <string name="add_name_user"> Qual seu nome?</string>
     <string name="user_name">Ex: Ana Luisa</string>
-    <string name="txtearn">Ganhei</string>
-    <string name="txtspend">Gasto</string>
+    <string name="txtearn">Ganho</string>
+    <string name="txtspend">Despesa</string>
 </resources>
