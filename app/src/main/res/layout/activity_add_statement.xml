@@ -61,6 +61,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_earn"
+                    android:drawableStart="@drawable/ic_earn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -69,6 +70,7 @@
 
                 <RadioButton
                     android:id="@+id/radio_spend"
+                    android:drawableStart="@drawable/ic_spend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

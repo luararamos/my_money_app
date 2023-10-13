@@ -4,11 +4,9 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.common.DependencyInjector
 import com.example.mymoneyapp.databinding.ActivityHomeBinding
@@ -20,18 +18,21 @@ import com.example.mymoneyapp.wallet.presentation.StatementPresenter
 class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     override lateinit var presenter: Wallet.Presenter
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var adapter: ListAdapter
-
+    private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.md_theme_dark_background)
 
-        setRecyclerView()
+        val fragment = StatementFragment()
+
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.home_fragment,fragment)
+            commit()
+        }
         setCardVisibility()
         setOnClicks()
-
         presenter = StatementPresenter(
             view = null,
             viewHome = this,
@@ -126,12 +127,6 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
         }
     }
 
-    private fun setRecyclerView() {
-        val result = mutableListOf<Statement>()
-        adapter = ListAdapter(result, this)
-        binding.rvItemsList.adapter = adapter
-        binding.rvItemsList.layoutManager = LinearLayoutManager(this)
-    }
 
     override fun onRestart() {
         super.onRestart()
@@ -140,17 +135,21 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     }
 
     override fun showStatement(response: List<Statement>) {
-        binding.rvItemsList.adapter = ListAdapter(response, this)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        mainViewModel.arrayListLiveData.postValue(response)
+
+//        binding.rvItemsList.adapter = ListAdapter(response, this)
     }
 
     override fun showAccountBalance(totalValue: Double?) {
-        if (totalValue == 0.0) {
-            binding.imgNotMoney.visibility = View.VISIBLE
-            binding.imgNotMoney.background =
-                ContextCompat.getDrawable(this, R.drawable.img_not_money);
-        } else {
-            binding.imgNotMoney.visibility = View.GONE
-        }
+//        if (totalValue == 0.0) {
+//            binding.imgNotMoney.visibility = View.VISIBLE
+//            binding.imgNotMoney.background =
+//                ContextCompat.getDrawable(this, R.drawable.img_not_money);
+//        } else {
+//            binding.imgNotMoney.visibility = View.GONE
+//        }
         binding.textCvWallet.text = String.format("R$ %.2f", totalValue)
     }
 

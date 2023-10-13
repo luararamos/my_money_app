@@ -14,4 +14,5 @@
     <string name="user_name">Ex: Ana Luisa</string>
     <string name="txtearn">Ganho</string>
     <string name="txtspend">Despesa</string>
+    <string name="statement">Extrato:</string>
 </resources>
