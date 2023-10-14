@@ -6,7 +6,7 @@
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
         android:contentDescription="@null"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/home" />
 
     <item
@@ -14,14 +14,21 @@
         android:icon="@drawable/ic_menu_earn"
         android:title="@string/earn"
         android:contentDescription="@null"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/spend"
         android:icon="@drawable/ic_menu_spend"
         android:title="@string/spend"
         android:contentDescription="@null"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/graphic"
+        android:icon="@drawable/ic_menu_graphic"
+        android:title="@string/graphic"
+        android:contentDescription="@null"
+        app:showAsAction="always"/>
 
 
 </menu>

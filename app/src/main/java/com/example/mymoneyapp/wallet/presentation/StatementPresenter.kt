@@ -14,6 +14,9 @@ class StatementPresenter(
     private var repository: WalletRepository
 ) : Wallet.Presenter {
 
+    private var earn: Double = 0.0
+    private var spend: Double = 0.0
+
     @SuppressLint("CheckResult")
     override fun findAccountBalance() {
         repository.accountBalance()
@@ -24,6 +27,18 @@ class StatementPresenter(
                 this::onAccountBalanceFail
             )
     }
+    @SuppressLint("CheckResult")
+    override fun findAccountType() {
+        repository.accountBalanceType("earn")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                this::onGetGraphicEarn,
+                this::onStatementFail
+            )
+
+    }
+
 
     @SuppressLint("CheckResult")
     override fun findUsers() {
@@ -102,8 +117,24 @@ class StatementPresenter(
             .subscribe()
     }
 
+    @SuppressLint("CheckResult")
+    private fun onGetGraphicEarn(d: Double) {
+        earn = d
+        repository.accountBalanceType("spend")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                this::onGetGraphicSpend,
+                this::onStatementFail
+            )
+    }
+    @SuppressLint("CheckResult")
+    private fun onGetGraphicSpend(d: Double) {
+        spend = d
+        viewHome?.showGraphic(earn, spend)
 
-    private fun onGetAccountBalance(d: Double?) {
+    }
+    private fun onGetAccountBalance(d: Double) {
         viewHome?.showAccountBalance(d)
     }
 
@@ -117,7 +148,7 @@ class StatementPresenter(
 
     @SuppressLint("CheckResult")
     private fun onAccountBalanceFail(t: Throwable) {
-        repository.accountBalanceError("earn")
+        repository.accountBalanceType("earn")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -130,7 +161,7 @@ class StatementPresenter(
 
     @SuppressLint("CheckResult")
     private fun onAccountBalanceFailEarn(t: Throwable) {
-        repository.accountBalanceError("spend")
+        repository.accountBalanceType("spend")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

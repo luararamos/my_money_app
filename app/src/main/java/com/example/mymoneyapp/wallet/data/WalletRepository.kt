@@ -28,10 +28,6 @@ class WalletRepository(context: Context) {
         return daoUser.getAllUser()
     }
 
-    //    fun findUser():Single<String>{
-//        return daoUser.getUser()
-//    }
-
 
     fun deleteStatement(statementId: Int): Completable {
         return dao.delete(statementId)
@@ -49,7 +45,7 @@ class WalletRepository(context: Context) {
         return dao.getEarnMinusSpend()
     }
 
-    fun accountBalanceError(type: String): Single<Double> {
+    fun accountBalanceType(type: String): Single<Double> {
         return dao.getSum(type)
     }
 }

@@ -14,6 +14,8 @@ import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
 import com.example.mymoneyapp.wallet.db.User
 import com.example.mymoneyapp.wallet.presentation.StatementPresenter
+import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_EARN
+import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_SPEND
 
 class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     override lateinit var presenter: Wallet.Presenter
@@ -28,7 +30,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
         val fragment = StatementFragment()
 
         supportFragmentManager.beginTransaction().apply {
-            add(R.id.home_fragment,fragment)
+            add(R.id.home_fragment, fragment)
             commit()
         }
         setCardVisibility()
@@ -102,6 +104,12 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
                     true
                 }
 
+                R.id.graphic -> {
+
+                    goToGraphicScreen(70.0F, 50.0F)
+                    true
+                }
+
                 else -> true
             }
         }
@@ -135,6 +143,12 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     }
 
     override fun showStatement(response: List<Statement>) {
+
+        val fragment = StatementFragment()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.home_fragment, fragment)
+            commit()
+        }
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         mainViewModel.arrayListLiveData.postValue(response)
@@ -151,6 +165,21 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
 //            binding.imgNotMoney.visibility = View.GONE
 //        }
         binding.textCvWallet.text = String.format("R$ %.2f", totalValue)
+    }
+
+    override fun showGraphic(earnValue: Double, spendValue: Double) {
+
+        val fragment = GraphicFragment().apply {
+            arguments = Bundle().apply {
+                putFloat(KEY_EARN, earnValue.toFloat())
+                putFloat(KEY_SPEND, spendValue.toFloat())
+            }
+
+        }
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.home_fragment, fragment)
+            commit()
+        }
     }
 
     override fun showUser(name: String) {
@@ -181,4 +210,11 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     override fun onClickDelete(id: Int, type: String) {
         setAlertDialog(id)
     }
+
+
+    fun goToGraphicScreen(earn: Float, spend: Float) {
+        presenter.findAccountType()
+    }
+
 }
+
