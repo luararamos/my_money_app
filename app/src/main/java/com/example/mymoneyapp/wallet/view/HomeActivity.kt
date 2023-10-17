@@ -34,7 +34,6 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
             add(R.id.home_fragment, fragment)
             commit()
         }
-        setCardVisibility()
         setOnClicks()
         presenter = StatementPresenter(
             view = null,
@@ -43,6 +42,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
         )
         presenter.findStatements()
         presenter.findUsers()
+        presenter.findAccountBalance()
 
 
     }
@@ -116,25 +116,6 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
         }
     }
 
-    private fun setCardVisibility() {
-//        with(binding) {
-//            imgVisibility.setOnClickListener {
-//                when {
-//                    textCvWallet.text.toString() != "*****" -> {
-//                        textCvWallet.text = "*****"
-//                        imgVisibility.setImageResource(R.drawable.ic_visibility_gone)
-//
-//                    }
-//
-//                    else -> {
-//                        presenter.findAccountBalance()
-//                        imgVisibility.setImageResource(R.drawable.ic_visibility)
-//
-//                    }
-//                }
-//            }
-//        }
-    }
 
 
     override fun onRestart() {
@@ -155,7 +136,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     }
 
     override fun showAccountBalance(totalValue: Double?) {
-//        binding.textCvWallet.text = String.format("R$ %.2f", totalValue)
+        binding.cardvisibilityWallet.setText(String.format("R$ %.2f", totalValue))
     }
 
     override fun showGraphic(earnValue: Double, spendValue: Double) {

@@ -2,6 +2,7 @@ package com.example.mymoneyapp.common.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -10,12 +11,13 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mymoneyapp.R
 
+
 class CardVisibility : FrameLayout {
     private lateinit var card: CardView
     private lateinit var constraint: ConstraintLayout
     private lateinit var imgVisibility: ImageView
     private lateinit var textView: TextView
-    private var visible: Boolean = false
+    private var visible: Boolean = true
     private var text: String? = null
 
     constructor(context: Context) : super(context)
@@ -38,30 +40,36 @@ class CardVisibility : FrameLayout {
         val typeArray = context.obtainStyledAttributes(attrs, R.styleable.CardVisibility, 0, 0)
         text = typeArray.getString(R.styleable.CardVisibility_text)
 
-//        card = getChildAt(0) as CardView
-//        constraint = card.getChildAt(0) as ConstraintLayout
-//        imgVisibility = constraint.getChildAt(0) as ImageView
-//        textView = constraint.getChildAt(0) as TextView
-        visible = false
+        card = getChildAt(0) as CardView
+        constraint = card.getChildAt(0) as ConstraintLayout
+        textView = constraint.getChildAt(0) as TextView
+        imgVisibility = constraint.getChildAt(1) as ImageView
 
-//        imgVisibility.setOnClickListener {
-//            showVisibility(visible)
-//        }
+        imgVisibility.setOnClickListener {
+            showVisibility(visible)
+        }
 
         typeArray.recycle()
     }
 
-//    fun showVisibility(v: Boolean) {
-//        if (v) {
-//            textView.text = text
-//            imgVisibility.setImageResource(com.example.mymoneyapp.R.drawable.ic_visibility)
-//            visible = false
-//        } else {
-//            textView.text = "*****"
-//            imgVisibility.setImageResource(com.example.mymoneyapp.R.drawable.ic_visibility_gone)
-//            visible = true
-//
-//        }
-//    }
+    fun setText(text: String) {
+        this.text = text
+        invalidate()
+        requestLayout()
+    }
+    fun showVisibility(v: Boolean) {
+        if (v) {
+            textView.text = text
+            imgVisibility.setImageResource(com.example.mymoneyapp.R.drawable.ic_visibility)
+            visible = false
+        } else {
+            textView.text = "*****"
+            imgVisibility.setImageResource(com.example.mymoneyapp.R.drawable.ic_visibility_gone)
+            visible = true
+
+        }
+    }
+
+
 
 }

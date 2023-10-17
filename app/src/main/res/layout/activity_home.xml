@@ -64,7 +64,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.example.mymoneyapp.common.view.CardVisibility
-        android:id="@+id/cv_wallet"
+        android:id="@+id/cardvisibility_wallet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_anchorGravity="bottom|center"
