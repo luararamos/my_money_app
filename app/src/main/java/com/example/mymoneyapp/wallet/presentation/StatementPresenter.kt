@@ -1,6 +1,9 @@
 package com.example.mymoneyapp.wallet.presentation
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
+import androidx.core.content.ContextCompat
+import com.example.mymoneyapp.R
 import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.data.WalletRepository
 import com.example.mymoneyapp.wallet.db.Statement
@@ -17,29 +20,7 @@ class StatementPresenter(
     private var earn: Double = 0.0
     private var spend: Double = 0.0
 
-    @SuppressLint("CheckResult")
-    override fun findAccountBalance() {
-        repository.accountBalance()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::onGetAccountBalance,
-                this::onAccountBalanceFail
-            )
-    }
-    @SuppressLint("CheckResult")
-    override fun findAccountType() {
-        repository.accountBalanceType("earn")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::onGetGraphicEarn,
-                this::onStatementFail
-            )
-
-    }
-
-
+    // Find
     @SuppressLint("CheckResult")
     override fun findUsers() {
         repository.findAllUser()
@@ -48,6 +29,18 @@ class StatementPresenter(
             .subscribe(
                 this::onGetUser,
                 this::onUserFail
+            )
+    }
+
+
+    @SuppressLint("CheckResult")
+    override fun findAccountBalance() {
+        repository.accountBalance()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                this::onGetAccountBalance,
+                this::onAccountBalanceFail
             )
     }
 
@@ -77,6 +70,18 @@ class StatementPresenter(
     }
 
     @SuppressLint("CheckResult")
+    override fun findValuesToGraphic() {
+        repository.accountBalanceType("earn")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                this::onGetGraphicEarn,
+                this::onStatementFail
+            )
+    }
+
+    // add
+    @SuppressLint("CheckResult")
     override fun addStatement(statement: Statement) {
         repository.insertStatement(statement)
             .subscribeOn(Schedulers.io())
@@ -93,7 +98,7 @@ class StatementPresenter(
             .subscribe()
     }
 
-
+    // update
     @SuppressLint("CheckResult")
     override fun updateUser(user: User) {
         repository.updateUser(User(id = 1, user.name))
@@ -105,6 +110,7 @@ class StatementPresenter(
             .subscribe()
     }
 
+    // delete
     @SuppressLint("CheckResult")
     override fun deleteStatement(statementId: Int) {
         repository.deleteStatement(statementId)
@@ -117,6 +123,23 @@ class StatementPresenter(
             .subscribe()
     }
 
+
+
+
+    // Success
+    private fun onGetUser(l: List<User>) {
+        viewHome?.showList(l)
+    }
+    private fun onGetAccountBalance(d: Double) {
+        if(d !=00.0){
+            viewHome?.hideFailure()
+        }
+        viewHome?.showAccountBalance(d)
+    }
+    private fun onGetListStatement(listOfStatemnt: List<Statement>) {
+        viewHome?.hideProgress()
+        viewHome?.showStatement(listOfStatemnt)
+    }
     @SuppressLint("CheckResult")
     private fun onGetGraphicEarn(d: Double) {
         earn = d
@@ -128,24 +151,14 @@ class StatementPresenter(
                 this::onStatementFail
             )
     }
+
     @SuppressLint("CheckResult")
     private fun onGetGraphicSpend(d: Double) {
         spend = d
         viewHome?.showGraphic(earn, spend)
-
-    }
-    private fun onGetAccountBalance(d: Double) {
-        viewHome?.showAccountBalance(d)
     }
 
-    private fun onGetUser(l: List<User>) {
-        viewHome?.showList(l)
-    }
-
-    private fun onGetListStatement(listOfStatemnt: List<Statement>) {
-        viewHome?.showStatement(listOfStatemnt)
-    }
-
+    //Fail
     @SuppressLint("CheckResult")
     private fun onAccountBalanceFail(t: Throwable) {
         repository.accountBalanceType("earn")
@@ -172,20 +185,20 @@ class StatementPresenter(
 
     }
 
-    private fun onUsertTast() {
-        viewHome?.showUser("Falha ao salvar o nome")
-    }
-
     @SuppressLint("CheckResult")
     private fun onUserFail(t: Throwable) {
         repository.insertUser(User(name = "MyMoney"))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete {
+                findUsers()
+            }
             .subscribe()
     }
 
     private fun onStatementFail(t: Throwable) {
         onGetAccountBalance(0.0)
+        viewHome?.showFailure(Resources.getSystem().getString(R.string.txt_mensage_error_without_money))
     }
 
     override fun onDestroy() {

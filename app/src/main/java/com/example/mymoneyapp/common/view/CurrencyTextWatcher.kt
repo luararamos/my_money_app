@@ -12,7 +12,7 @@ class CurrencyTextWatcher : TextWatcher {
     override fun afterTextChanged(s: Editable) {
         if (!mEditing) {
             mEditing = true
-            val digits = s.toString().replace("\\D".toRegex(), "")
+            val digits = s.toString().replace("RS \\D".toRegex(), "")
             val nf = NumberFormat.getCurrencyInstance()
             try {
                 val formatted = nf.format(digits.toDouble() / 100)

@@ -14,7 +14,7 @@ interface Wallet {
         fun updateUser(user: User)
         fun findStatements(type:String? = null)
         fun findAccountBalance()
-        fun findAccountType()
+        fun findValuesToGraphic()
         fun findUsers()
         fun deleteStatement(statementId: Int)
 
@@ -25,6 +25,7 @@ interface Wallet {
         fun showProgress()
         fun hideProgress()
         fun showFailure(message: String)
+        fun hideFailure()
     }
     interface HomeView : View {
         fun showStatement(response: List<Statement>)

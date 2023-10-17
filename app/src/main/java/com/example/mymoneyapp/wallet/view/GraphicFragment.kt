@@ -9,7 +9,6 @@ import org.eazegraph.lib.models.PieModel
 
 class GraphicFragment : Fragment(R.layout.fragment_graphic) {
     private var binding: FragmentGraphicBinding? = null
-    private lateinit var mainViewModel: MainViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -19,21 +18,26 @@ class GraphicFragment : Fragment(R.layout.fragment_graphic) {
         val spend =
             arguments?.getFloat(KEY_SPEND) ?: throw IllegalArgumentException("email not found")
 
+        setGraphic(earn, spend)
+
+    }
+    private fun setGraphic(earn: Float,spend: Float){
+
         binding?.includeCardAccountBalance?.tvValueEarnCardAccountBalance?.text = earn.toString()
         binding?.includeCardAccountBalance?.tvValueSpendCardAccountBalance?.text = spend.toString()
 
-        val porc1 =  (spend * 100)/(earn)
-        val porc2 = 100.0F - porc1
+        val porcSpend =  (spend * 100)/(earn)
+        val porcEarn = 100.0F - porcSpend
         binding?.includeCardGraphic?.piechart?.addPieSlice(
             PieModel(
-                "Ganhos", porc2,
+                "Ganhos", porcEarn,
                 resources.getColor(R.color.earn)
             )
 
         )
         binding?.includeCardGraphic?.piechart?.addPieSlice(
             PieModel(
-                "Despesas", porc1,
+                "Despesas", porcSpend,
                 resources.getColor(R.color.spend)
             )
 

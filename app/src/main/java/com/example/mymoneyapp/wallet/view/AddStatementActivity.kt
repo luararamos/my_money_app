@@ -61,4 +61,7 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
 
     override fun showFailure(message: String) {
     }
+
+    override fun hideFailure() {
+    }
 }

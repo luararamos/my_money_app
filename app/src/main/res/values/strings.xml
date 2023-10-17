@@ -16,4 +16,7 @@
     <string name="txtearn">Ganho</string>
     <string name="txtspend">Despesa</string>
     <string name="statement">Extrato:</string>
+    <string name="txt_password_visibility_gone">*****</string>
+    <string name="txt_mensage_error_without_money">Você está sem dinheiro</string>
+    <string name="txt_mensage_error_occurred">Ops..deu erro! Tente mais tarde.</string>
 </resources>

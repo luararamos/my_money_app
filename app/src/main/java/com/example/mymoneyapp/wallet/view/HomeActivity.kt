@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -116,23 +117,23 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     }
 
     private fun setCardVisibility() {
-        with(binding) {
-            imgVisibility.setOnClickListener {
-                when {
-                    textCvWallet.text.toString() != "*****" -> {
-                        textCvWallet.text = "*****"
-                        imgVisibility.setImageResource(R.drawable.ic_visibility_gone)
-
-                    }
-
-                    else -> {
-                        presenter.findAccountBalance()
-                        imgVisibility.setImageResource(R.drawable.ic_visibility)
-
-                    }
-                }
-            }
-        }
+//        with(binding) {
+//            imgVisibility.setOnClickListener {
+//                when {
+//                    textCvWallet.text.toString() != "*****" -> {
+//                        textCvWallet.text = "*****"
+//                        imgVisibility.setImageResource(R.drawable.ic_visibility_gone)
+//
+//                    }
+//
+//                    else -> {
+//                        presenter.findAccountBalance()
+//                        imgVisibility.setImageResource(R.drawable.ic_visibility)
+//
+//                    }
+//                }
+//            }
+//        }
     }
 
 
@@ -150,21 +151,11 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
             commit()
         }
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         mainViewModel.arrayListLiveData.postValue(response)
-
-//        binding.rvItemsList.adapter = ListAdapter(response, this)
     }
 
     override fun showAccountBalance(totalValue: Double?) {
-//        if (totalValue == 0.0) {
-//            binding.imgNotMoney.visibility = View.VISIBLE
-//            binding.imgNotMoney.background =
-//                ContextCompat.getDrawable(this, R.drawable.img_not_money);
-//        } else {
-//            binding.imgNotMoney.visibility = View.GONE
-//        }
-        binding.textCvWallet.text = String.format("R$ %.2f", totalValue)
+//        binding.textCvWallet.text = String.format("R$ %.2f", totalValue)
     }
 
     override fun showGraphic(earnValue: Double, spendValue: Double) {
@@ -199,12 +190,27 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
 
 
     override fun showProgress() {
+        binding.prograssbarHomeFragment.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        binding.prograssbarHomeFragment.visibility = View.GONE
     }
 
     override fun showFailure(message: String) {
+        when(message){
+            getString(R.string.txt_mensage_error_without_money) ->{
+                binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_not_money))
+            }
+            getString(R.string.txt_mensage_error_occurred) -> {
+                binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_error_occurred))
+            }
+
+        }
+    }
+
+    override fun hideFailure() {
+        binding.imgErrorActivityHome.visibility = View.GONE
     }
 
     override fun onClickDelete(id: Int, type: String) {
@@ -213,7 +219,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
 
 
     fun goToGraphicScreen(earn: Float, spend: Float) {
-        presenter.findAccountType()
+        presenter.findValuesToGraphic()
     }
 
 }
