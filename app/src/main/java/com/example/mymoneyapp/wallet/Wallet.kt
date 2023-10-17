@@ -9,30 +9,23 @@ interface Wallet {
 
     // camada presenter
     interface Presenter : BasePresenter {
-        fun addStatement(statement: Statement)
-        fun addUser(user: User)
-        fun updateUser(user: User)
         fun findStatements(type:String? = null)
         fun findAccountBalance()
         fun findValuesToGraphic()
-        fun findUsers()
         fun deleteStatement(statementId: Int)
 
     }
 
     // camada de view
-    interface View : BaseView<Presenter> {
+    interface HomeView : BaseView<Presenter> {
         fun showProgress()
         fun hideProgress()
         fun showFailure(message: String)
         fun hideFailure()
-    }
-    interface HomeView : View {
         fun showStatement(response: List<Statement>)
         fun showAccountBalance(totalValue: Double?)
         fun showGraphic(earnValue: Double, spendValue: Double)
-        fun showUser(name: String)
-        fun showList(users: List<User>)
+
     }
 
 }

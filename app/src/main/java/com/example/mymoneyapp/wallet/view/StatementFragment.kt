@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.databinding.FragmentStatementBinding
+import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
 
 class StatementFragment: Fragment(R.layout.fragment_statement), OnListClickListener {
     private var binding: FragmentStatementBinding? = null
     private lateinit var adapter: ListAdapter
     private lateinit var mainViewModel: MainViewModel
+    lateinit var presenter: Wallet.Presenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,5 +54,8 @@ class StatementFragment: Fragment(R.layout.fragment_statement), OnListClickListe
         setAlertDialog(id)
     }
 
+    companion object {
+        const val KEY_ID_STATEMENT = "key_id_statement"
+    }
 
 }

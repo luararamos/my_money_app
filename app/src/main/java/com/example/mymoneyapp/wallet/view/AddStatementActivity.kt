@@ -11,13 +11,15 @@ import com.example.mymoneyapp.R
 import com.example.mymoneyapp.common.CurrencyTextWatcher
 import com.example.mymoneyapp.common.DependencyInjector
 import com.example.mymoneyapp.databinding.ActivityAddStatementBinding
+import com.example.mymoneyapp.wallet.RegisterStatement
 import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
 import com.example.mymoneyapp.wallet.db.User
+import com.example.mymoneyapp.wallet.presentation.RegisterStatementPresenter
 import com.example.mymoneyapp.wallet.presentation.StatementPresenter
 
-class AddStatementActivity : AppCompatActivity(), Wallet.View {
-    override lateinit var presenter: Wallet.Presenter
+class AddStatementActivity : AppCompatActivity(), RegisterStatement.View {
+    override lateinit var presenter: RegisterStatement.Presenter
     lateinit var binding: ActivityAddStatementBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,7 @@ class AddStatementActivity : AppCompatActivity(), Wallet.View {
 
         binding.etAddMoney.addTextChangedListener(watcher)
 
-        presenter = StatementPresenter(view = this, viewHome = null,repository = DependencyInjector.walletRepository(this))
+        presenter = RegisterStatementPresenter(view = this, repository = DependencyInjector.walletRepository(this))
         binding.btnAddStatement.setOnClickListener {
             val money = binding.etAddMoney.text.toString().toDouble()
             val description = binding.etDescription.text.toString()

@@ -11,15 +11,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.common.DependencyInjector
 import com.example.mymoneyapp.databinding.ActivityHomeBinding
+import com.example.mymoneyapp.wallet.RegisterUser
 import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
 import com.example.mymoneyapp.wallet.db.User
 import com.example.mymoneyapp.wallet.presentation.StatementPresenter
+import com.example.mymoneyapp.wallet.presentation.UserPresenter
 import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_EARN
 import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_SPEND
 
-class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
+class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
     override lateinit var presenter: Wallet.Presenter
+    private lateinit var presenterUser: RegisterUser.Presenter
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +39,15 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
         }
         setOnClicks()
         presenter = StatementPresenter(
-            view = null,
             viewHome = this,
             repository = DependencyInjector.walletRepository(this)
         )
+        presenterUser = UserPresenter(
+            view = this,
+            repository = DependencyInjector.walletRepository(this)
+        )
         presenter.findStatements()
-        presenter.findUsers()
+        presenterUser.findUsers()
         presenter.findAccountBalance()
 
 
@@ -73,7 +79,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
             }
             .setPositiveButton(R.string.save) { dialog, which ->
                 val userName = input.text.toString()
-                presenter.updateUser(User(name = userName))
+                presenterUser.updateUser(User(name = userName))
             }
             .create()
             .show()
@@ -114,9 +120,9 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
                 else -> true
             }
         }
+
+
     }
-
-
 
     override fun onRestart() {
         super.onRestart()
@@ -158,17 +164,16 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
         binding.txtNameUser.text = name
     }
 
-    override fun showList(users: List<User>) {
+    override fun showListUser(users: List<User>) {
         if (users.isEmpty()) {
             binding.txtNameUser.text = "MyMoneyApp"
-            presenter.addUser(User(name = "MyMoneyApp"))
+            presenterUser.addUser(User(name = "MyMoneyApp"))
         } else {
             val user = users[0]
             binding.txtNameUser.text = user.name
         }
 
     }
-
 
     override fun showProgress() {
         binding.prograssbarHomeFragment.visibility = View.VISIBLE
@@ -194,12 +199,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
         binding.imgErrorActivityHome.visibility = View.GONE
     }
 
-    override fun onClickDelete(id: Int, type: String) {
-        setAlertDialog(id)
-    }
-
-
-    fun goToGraphicScreen(earn: Float, spend: Float) {
+    private fun goToGraphicScreen(earn: Float, spend: Float) {
         presenter.findValuesToGraphic()
     }
 
