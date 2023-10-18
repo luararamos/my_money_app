@@ -189,8 +189,8 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
             getString(R.string.txt_mensage_error_occurred) -> {
                 binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_error_occurred))
             }
-
         }
+        binding.imgErrorActivityHome.visibility = View.VISIBLE
     }
 
     override fun hideFailure() {

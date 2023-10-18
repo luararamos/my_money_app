@@ -127,9 +127,7 @@ class StatementPresenter(
 
     private fun onStatementFail(t: Throwable) {
         onGetAccountBalance(0.0)
-//        viewHome?.showFailure(
-//            Resources.getSystem().getString(R.string.txt_mensage_error_without_money)
-//        )
+        viewHome?.showFailure("Você está sem dinheiro")
     }
 
     private fun onGetGraphicSpend(d: Double) {
