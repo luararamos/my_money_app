@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardAccountBalance"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:elevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/txt_statement_card_account_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/statement"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/seed"
+            app:layout_constraintTop_toBottomOf="@+id/txt_statement_card_account_balance" />
+
+        <TextView
+            android:id="@+id/txt_earn_card_account_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/txtearn"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view1"/>
+
+        <TextView
+            android:id="@+id/tv_value_earn_card_account_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            tools:text="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txt_earn_card_account_balance"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_earn_card_account_balance"
+            app:layout_constraintStart_toEndOf="@id/txt_earn_card_account_balance"
+            android:textAlignment="textEnd"
+            android:textColor="@color/earn"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/seed"
+            app:layout_constraintTop_toBottomOf="@+id/txt_earn_card_account_balance" />
+
+        <TextView
+            android:id="@+id/txt_spend_card_account_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/txtspend"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view2"/>
+
+        <TextView
+            android:id="@+id/tv_value_spend_card_account_balance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            tools:text="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txt_spend_card_account_balance"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_spend_card_account_balance"
+            app:layout_constraintStart_toEndOf="@id/txt_spend_card_account_balance"
+            android:textAlignment="textEnd"
+            android:textColor="@color/spend"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

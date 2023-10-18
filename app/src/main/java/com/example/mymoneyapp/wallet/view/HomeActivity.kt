@@ -7,38 +7,48 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.common.DependencyInjector
 import com.example.mymoneyapp.databinding.ActivityHomeBinding
+import com.example.mymoneyapp.wallet.RegisterUser
 import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
 import com.example.mymoneyapp.wallet.db.User
 import com.example.mymoneyapp.wallet.presentation.StatementPresenter
+import com.example.mymoneyapp.wallet.presentation.UserPresenter
+import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_EARN
+import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_SPEND
 
-class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
+class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
     override lateinit var presenter: Wallet.Presenter
+    private lateinit var presenterUser: RegisterUser.Presenter
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var adapter: ListAdapter
-
+    private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.md_theme_dark_background)
 
-        setRecyclerView()
-        setCardVisibility()
-        setOnClicks()
+        val fragment = StatementFragment()
 
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.home_fragment, fragment)
+            commit()
+        }
+        setOnClicks()
         presenter = StatementPresenter(
-            view = null,
             viewHome = this,
             repository = DependencyInjector.walletRepository(this)
         )
+        presenterUser = UserPresenter(
+            view = this,
+            repository = DependencyInjector.walletRepository(this)
+        )
         presenter.findStatements()
-        presenter.findUsers()
+        presenterUser.findUsers()
+        presenter.findAccountBalance()
 
 
     }
@@ -69,7 +79,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
             }
             .setPositiveButton(R.string.save) { dialog, which ->
                 val userName = input.text.toString()
-                presenter.updateUser(User(name = userName))
+                presenterUser.updateUser(User(name = userName))
             }
             .create()
             .show()
@@ -101,36 +111,17 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
                     true
                 }
 
+                R.id.graphic -> {
+
+                    goToGraphicScreen(70.0F, 50.0F)
+                    true
+                }
+
                 else -> true
             }
         }
-    }
 
-    private fun setCardVisibility() {
-        with(binding) {
-            imgVisibility.setOnClickListener {
-                when {
-                    textCvWallet.text.toString() != "*****" -> {
-                        textCvWallet.text = "*****"
-                        imgVisibility.setImageResource(R.drawable.ic_visibility_gone)
 
-                    }
-
-                    else -> {
-                        presenter.findAccountBalance()
-                        imgVisibility.setImageResource(R.drawable.ic_visibility)
-
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setRecyclerView() {
-        val result = mutableListOf<Statement>()
-        adapter = ListAdapter(result, this)
-        binding.rvItemsList.adapter = adapter
-        binding.rvItemsList.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onRestart() {
@@ -140,28 +131,43 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
     }
 
     override fun showStatement(response: List<Statement>) {
-        binding.rvItemsList.adapter = ListAdapter(response, this)
+
+        val fragment = StatementFragment()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.home_fragment, fragment)
+            commit()
+        }
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainViewModel.arrayListLiveData.postValue(response)
     }
 
     override fun showAccountBalance(totalValue: Double?) {
-        if (totalValue == 0.0) {
-            binding.imgNotMoney.visibility = View.VISIBLE
-            binding.imgNotMoney.background =
-                ContextCompat.getDrawable(this, R.drawable.img_not_money);
-        } else {
-            binding.imgNotMoney.visibility = View.GONE
+        binding.cardvisibilityWallet.setText(String.format("R$ %.2f", totalValue))
+    }
+
+    override fun showGraphic(earnValue: Double, spendValue: Double) {
+
+        val fragment = GraphicFragment().apply {
+            arguments = Bundle().apply {
+                putFloat(KEY_EARN, earnValue.toFloat())
+                putFloat(KEY_SPEND, spendValue.toFloat())
+            }
+
         }
-        binding.textCvWallet.text = String.format("R$ %.2f", totalValue)
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.home_fragment, fragment)
+            commit()
+        }
     }
 
     override fun showUser(name: String) {
         binding.txtNameUser.text = name
     }
 
-    override fun showList(users: List<User>) {
+    override fun showListUser(users: List<User>) {
         if (users.isEmpty()) {
             binding.txtNameUser.text = "MyMoneyApp"
-            presenter.addUser(User(name = "MyMoneyApp"))
+            presenterUser.addUser(User(name = "MyMoneyApp"))
         } else {
             val user = users[0]
             binding.txtNameUser.text = user.name
@@ -169,17 +175,33 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, OnListClickListener {
 
     }
 
-
     override fun showProgress() {
+        binding.prograssbarHomeFragment.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        binding.prograssbarHomeFragment.visibility = View.GONE
     }
 
     override fun showFailure(message: String) {
+        when(message){
+            getString(R.string.txt_mensage_error_without_money) ->{
+                binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_not_money))
+            }
+            getString(R.string.txt_mensage_error_occurred) -> {
+                binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_error_occurred))
+            }
+
+        }
     }
 
-    override fun onClickDelete(id: Int, type: String) {
-        setAlertDialog(id)
+    override fun hideFailure() {
+        binding.imgErrorActivityHome.visibility = View.GONE
     }
+
+    private fun goToGraphicScreen(earn: Float, spend: Float) {
+        presenter.findValuesToGraphic()
+    }
+
 }
+

@@ -23,23 +23,23 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/logo_my_money"
                 android:layout_gravity="center"
+                android:src="@drawable/logo_my_money"
                 app:civ_border_color="@color/md_theme_light_onPrimary"
                 app:civ_border_width="1dp"
-                app:civ_circle_background_color="@color/md_theme_light_onPrimary"/>
+                app:civ_circle_background_color="@color/md_theme_light_onPrimary" />
 
             <TextView
                 android:id="@+id/txt_name_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
                 android:layout_gravity="center"
-                android:drawableEnd="@drawable/ic_edit"
-                android:drawablePadding="4dp"
-                android:textAlignment="center"
                 android:layout_marginTop="64dp"
-                android:textColor="@color/md_theme_light_onPrimary"/>
+                android:drawablePadding="4dp"
+                android:text="@string/app_name"
+                android:textAlignment="center"
+                android:textColor="@color/md_theme_light_onPrimary"
+                app:drawableEndCompat="@drawable/ic_edit" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tool"
@@ -63,70 +63,51 @@
         android:background="@color/md_theme_light_onPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_wallet"
+    <com.example.mymoneyapp.common.view.CardVisibility
+        android:id="@+id/cardvisibility_wallet"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        app:cardBackgroundColor="?attr/colorPrimaryContainer"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="8dp"
-        app:layout_anchor="@id/appBar"
-        app:layout_anchorGravity="bottom|center">
+        android:layout_height="wrap_content"
+        app:layout_anchorGravity="bottom|center"
+        app:layout_anchor="@id/appBar"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/home_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:layout="@layout/fragment_statement" />
 
-            <TextView
-                android:id="@+id/text_cv_wallet"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:text="*****"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/img_visibility"
-                app:layout_constraintHorizontal_weight="4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/img_visibility"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_visibility_gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@+id/text_cv_wallet"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.cardview.widget.CardView>
+    <ProgressBar
+        android:id="@+id/prograssbar_home_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:progressTint="@color/seed"
+        android:visibility="visible"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:layout="@layout/fragment_statement" />
 
     <ImageView
-        android:id="@+id/img_not_money"
-        android:visibility="visible"
+        android:id="@+id/img_error_activity_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_items_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:layout_marginTop="32dp"
-        android:clipToPadding="false"
-        android:padding="16dp"
-        tools:itemCount="30"
-        tools:listitem="@layout/item_bills" />
+        android:contentDescription="@null" />
+
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/rv_items_list"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:clipToPadding="false"-->
+    <!--        android:padding="16dp"-->
+    <!--        tools:itemCount="30"-->
+    <!--        tools:listitem="@layout/item_bills" />-->
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_nav_app_bar"
