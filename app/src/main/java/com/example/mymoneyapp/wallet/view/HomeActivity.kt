@@ -7,6 +7,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.common.DependencyInjector
@@ -31,7 +32,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.md_theme_dark_background)
 
-        val fragment = StatementFragment()
+        var fragment = StatementsFragment()
 
         supportFragmentManager.beginTransaction().apply {
             add(R.id.home_fragment, fragment)
@@ -50,20 +51,15 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
         presenterUser.findUsers()
         presenter.findAccountBalance()
 
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-    }
 
-    private fun setAlertDialog(statementId: Int) {
-        AlertDialog.Builder(this)
-            .setMessage(R.string.delete_message)
-            .setNegativeButton(R.string.cancel) { dialog, which ->
 
-            }
-            .setPositiveButton(R.string.delete) { dialog, which ->
-                presenter.deleteStatement(statementId)
-            }
-            .create()
-            .show()
+        mainViewModel.selectedItem.observe(this, Observer {statement ->
+            presenter.deleteStatement(statement.id)
+
+        })
+
     }
 
     private fun setAlertDialNameUser() {
@@ -132,17 +128,18 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
 
     override fun showStatement(response: List<Statement>) {
 
-        val fragment = StatementFragment()
+        val fragment = StatementsFragment()
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.home_fragment, fragment)
             commit()
         }
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         mainViewModel.arrayListLiveData.postValue(response)
     }
 
     override fun showAccountBalance(totalValue: Double?) {
         binding.cardvisibilityWallet.setText(String.format("R$ %.2f", totalValue))
+        binding.cardvisibilityWallet.showVisibility(false)
     }
 
     override fun showGraphic(earnValue: Double, spendValue: Double) {
@@ -184,10 +181,11 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
     }
 
     override fun showFailure(message: String) {
-        when(message){
-            getString(R.string.txt_mensage_error_without_money) ->{
+        when (message) {
+            getString(R.string.txt_mensage_error_without_money) -> {
                 binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_not_money))
             }
+
             getString(R.string.txt_mensage_error_occurred) -> {
                 binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_error_occurred))
             }

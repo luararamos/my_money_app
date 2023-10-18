@@ -1,5 +1,7 @@
 package com.example.mymoneyapp.wallet.view
 
+import com.example.mymoneyapp.wallet.db.Statement
+
 interface OnListClickListener {
-    fun onClickDelete(id: Int, type: String)
+    fun onClickDelete(statement: Statement)
 }

@@ -8,4 +8,10 @@ import com.example.mymoneyapp.wallet.db.Statement
 
 class MainViewModel: ViewModel() {
     val arrayListLiveData = MutableLiveData<List<Statement>>()
+    private val mutableSelectedItem = MutableLiveData<Statement>()
+    val selectedItem: LiveData<Statement> get() = mutableSelectedItem
+
+    fun selectItem(item: Statement) {
+        mutableSelectedItem.value = item
+    }
 }

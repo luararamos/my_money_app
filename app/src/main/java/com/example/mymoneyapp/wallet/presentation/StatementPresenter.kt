@@ -1,8 +1,6 @@
 package com.example.mymoneyapp.wallet.presentation
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
-import com.example.mymoneyapp.R
 import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.data.WalletRepository
 import com.example.mymoneyapp.wallet.db.Statement
@@ -96,14 +94,8 @@ class StatementPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 this::onGetGraphicSpend,
-                this::onStatementFail
+                this::onGraphicFail
             )
-    }
-
-    @SuppressLint("CheckResult")
-    private fun onGetGraphicSpend(d: Double) {
-        spend = d
-        viewHome?.showGraphic(earn, spend)
     }
 
     //Fail
@@ -135,9 +127,19 @@ class StatementPresenter(
 
     private fun onStatementFail(t: Throwable) {
         onGetAccountBalance(0.0)
-        viewHome?.showFailure(
-            Resources.getSystem().getString(R.string.txt_mensage_error_without_money)
-        )
+//        viewHome?.showFailure(
+//            Resources.getSystem().getString(R.string.txt_mensage_error_without_money)
+//        )
+    }
+
+    private fun onGetGraphicSpend(d: Double) {
+        spend = d
+        viewHome?.showGraphic(earn, spend)
+    }
+
+    private fun onGraphicFail(t: Throwable) {
+        if (earn != 00.0) spend = 00.0 else earn = 00.0
+        viewHome?.showGraphic(earn, spend)
     }
 
     override fun onDestroy() {
