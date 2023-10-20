@@ -4,7 +4,7 @@
 # MyMoney - Sua Solução de Finanças Pessoais
 O MyMoney é um aplicativo de gerenciamento financeiro intuitivo e abrangente, projetado para ajudá-lo a tomar o controle de suas finanças pessoais. Com uma interface amigável e recursos poderosos, o MyMoney é a ferramenta perfeita para acompanhar, planejar e otimizar suas finanças.
 
-![my_money_gif](https://github.com/luararamos/my_money_app/assets/35637366/2e4821a9-052a-486f-a11d-febeda3699fc)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![my_money_gif](https://github.com/luararamos/my_money_app/assets/35637366/2e4821a9-052a-486f-a11d-febeda3699fc)
 
 
 # Funcionalidades Principais
