@@ -7,17 +7,13 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_my_money"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_my_money"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.MyMoneyApp"
         tools:targetApi="31">
-        <activity
-            android:name=".wallet.view.TestGraphicActivity"
-            android:exported="false" >
 
-        </activity>
         <activity
             android:name=".wallet.view.AddStatementActivity"
             android:exported="false" />
