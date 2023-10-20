@@ -5,8 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.TextView
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.marginTop
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.common.DependencyInjector
@@ -19,6 +27,10 @@ import com.example.mymoneyapp.wallet.presentation.StatementPresenter
 import com.example.mymoneyapp.wallet.presentation.UserPresenter
 import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_EARN
 import com.example.mymoneyapp.wallet.view.GraphicFragment.Companion.KEY_SPEND
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.BaseOnOffsetChangedListener
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
     override lateinit var presenter: Wallet.Presenter
@@ -31,10 +43,10 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
         setContentView(binding.root)
         window.statusBarColor = getColor(R.color.md_theme_dark_background)
 
-        val fragment = StatementFragment()
+        var fragment = StatementsFragment()
 
         supportFragmentManager.beginTransaction().apply {
-            add(R.id.home_fragment, fragment)
+            add(R.id.home_fragment_activity_home, fragment)
             commit()
         }
         setOnClicks()
@@ -50,20 +62,17 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
         presenterUser.findUsers()
         presenter.findAccountBalance()
 
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-    }
+        hideWithAppBarLayout(binding.cardvisibilityActivityHome, binding.txtNameUser, binding.homeFragmentActivityHome, binding.fabActivityHome,binding.appBarActivityHome)
+//        hideWithAppBarLayout(binding.txtNameUser, binding.appBarActivityHome)
+//        hideWithAppBarLayout(binding.fabActivityHome, binding.appBarActivityHome)
 
-    private fun setAlertDialog(statementId: Int) {
-        AlertDialog.Builder(this)
-            .setMessage(R.string.delete_message)
-            .setNegativeButton(R.string.cancel) { dialog, which ->
+        mainViewModel.selectedItem.observe(this, Observer {statement ->
+            presenter.deleteStatement(statement.id)
 
-            }
-            .setPositiveButton(R.string.delete) { dialog, which ->
-                presenter.deleteStatement(statementId)
-            }
-            .create()
-            .show()
+        })
+
     }
 
     private fun setAlertDialNameUser() {
@@ -89,11 +98,11 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
         binding.txtNameUser.setOnClickListener {
             setAlertDialNameUser()
         }
-        binding.fab.setOnClickListener {
+        binding.fabActivityHome.setOnClickListener {
             val intent = Intent(this, AddStatementActivity::class.java)
             startActivity(intent)
         }
-        binding.bottomNavAppBar.setOnMenuItemClickListener { item ->
+        binding.bottomNavAppBarActivityHome.setOnMenuItemClickListener { item ->
 
             when (item.itemId) {
                 R.id.home -> {
@@ -132,17 +141,18 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
 
     override fun showStatement(response: List<Statement>) {
 
-        val fragment = StatementFragment()
+        val fragment = StatementsFragment()
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.home_fragment, fragment)
+            replace(R.id.home_fragment_activity_home, fragment)
             commit()
         }
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         mainViewModel.arrayListLiveData.postValue(response)
     }
 
     override fun showAccountBalance(totalValue: Double?) {
-        binding.cardvisibilityWallet.setText(String.format("R$ %.2f", totalValue))
+        binding.cardvisibilityActivityHome.setText(String.format("R$ %.2f", totalValue))
+        binding.cardvisibilityActivityHome.showVisibility(false)
     }
 
     override fun showGraphic(earnValue: Double, spendValue: Double) {
@@ -155,7 +165,7 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
 
         }
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.home_fragment, fragment)
+            replace(R.id.home_fragment_activity_home, fragment)
             commit()
         }
     }
@@ -176,23 +186,24 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
     }
 
     override fun showProgress() {
-        binding.prograssbarHomeFragment.visibility = View.VISIBLE
+        binding.progressbarActivityHome.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        binding.prograssbarHomeFragment.visibility = View.GONE
+        binding.progressbarActivityHome.visibility = View.GONE
     }
 
     override fun showFailure(message: String) {
-        when(message){
-            getString(R.string.txt_mensage_error_without_money) ->{
+        when (message) {
+            getString(R.string.txt_mensage_error_without_money) -> {
                 binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_not_money))
             }
+
             getString(R.string.txt_mensage_error_occurred) -> {
                 binding.imgErrorActivityHome.setImageDrawable(getDrawable(R.drawable.img_error_occurred))
             }
-
         }
+        binding.imgErrorActivityHome.visibility = View.VISIBLE
     }
 
     override fun hideFailure() {
@@ -201,6 +212,37 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
 
     private fun goToGraphicScreen(earn: Float, spend: Float) {
         presenter.findValuesToGraphic()
+    }
+
+    @BindingAdapter("hideWithAppBarLayout")
+    fun hideWithAppBarLayout(view: View, textView: TextView,  frame : FrameLayout, fab: FloatingActionButton ,appBarLayout: AppBarLayout?) {
+        val params = frame.layoutParams as ViewGroup.MarginLayoutParams
+        if (appBarLayout == null) return
+        if (view.parent is CoordinatorLayout) {
+            val lp = view.layoutParams as CoordinatorLayout.LayoutParams
+            lp.anchorId = appBarLayout.id
+            appBarLayout.addOnOffsetChangedListener(BaseOnOffsetChangedListener { appBar: AppBarLayout, verticalOffset: Int ->
+                val percentage =
+                    Math.abs(verticalOffset).toFloat() / appBar.totalScrollRange
+                //on collapsing
+                if (percentage == 1f) {
+                    view.visibility = View.GONE
+                    textView.visibility = View.GONE
+                    fab.visibility = View.GONE
+                    params.topMargin = 8
+                    frame.layoutParams = params
+                }
+                //on expending
+                if (percentage == 0f){
+                    view.visibility = View.VISIBLE
+                    textView.visibility = View.VISIBLE
+                    fab.visibility = View.VISIBLE
+                    params.topMargin = 102
+                    frame.layoutParams = params
+
+                }
+            } as BaseOnOffsetChangedListener<*>)
+        }
     }
 
 }

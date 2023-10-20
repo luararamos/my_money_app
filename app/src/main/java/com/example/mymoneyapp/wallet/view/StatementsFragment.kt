@@ -4,29 +4,36 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mymoneyapp.R
 import com.example.mymoneyapp.databinding.FragmentStatementBinding
-import com.example.mymoneyapp.wallet.Wallet
 import com.example.mymoneyapp.wallet.db.Statement
 
-class StatementFragment: Fragment(R.layout.fragment_statement), OnListClickListener {
+
+class StatementsFragment : Fragment(R.layout.fragment_statement), OnListClickListener {
     private var binding: FragmentStatementBinding? = null
     private lateinit var adapter: ListAdapter
     private lateinit var mainViewModel: MainViewModel
-    lateinit var presenter: Wallet.Presenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStatementBinding.bind(view)
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        activity?.let {
+            mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        }
+
 
         mainViewModel.arrayListLiveData.observe(viewLifecycleOwner) { arrayList ->
             setRecyclerView(arrayList)
+
         }
+
     }
+
     private fun setRecyclerView(list: List<Statement>) {
         adapter = ListAdapter(list, this)
         binding?.rvItemsList?.adapter = adapter
@@ -38,24 +45,23 @@ class StatementFragment: Fragment(R.layout.fragment_statement), OnListClickListe
         super.onDestroy()
     }
 
-    private fun setAlertDialog(statementId: Int) {
+    private fun setAlertDialog(statement: Statement) {
         AlertDialog.Builder(context)
             .setMessage(R.string.delete_message)
             .setNegativeButton(R.string.cancel) { dialog, which ->
 
             }
             .setPositiveButton(R.string.delete) { dialog, which ->
-//                presenter.deleteStatement(statementId)
+                mainViewModel.selectItem(statement)
             }
             .create()
             .show()
     }
-    override fun onClickDelete(id: Int, type: String) {
-        setAlertDialog(id)
+
+    override fun onClickDelete(statement: Statement) {
+        setAlertDialog(statement)
     }
 
-    companion object {
-        const val KEY_ID_STATEMENT = "key_id_statement"
-    }
+
 
 }

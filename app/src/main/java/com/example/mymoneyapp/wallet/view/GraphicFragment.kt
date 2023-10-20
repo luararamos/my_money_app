@@ -17,17 +17,19 @@ class GraphicFragment : Fragment(R.layout.fragment_graphic) {
             arguments?.getFloat(KEY_EARN) ?: throw IllegalArgumentException("email not found")
         val spend =
             arguments?.getFloat(KEY_SPEND) ?: throw IllegalArgumentException("email not found")
-
         setGraphic(earn, spend)
 
     }
     private fun setGraphic(earn: Float,spend: Float){
+        val porcSpend =  (spend * 100)/(earn)
+        val porcEarn = 100.0F - porcSpend
 
         binding?.includeCardAccountBalance?.tvValueEarnCardAccountBalance?.text = earn.toString()
         binding?.includeCardAccountBalance?.tvValueSpendCardAccountBalance?.text = spend.toString()
+        binding?.includeCardGraphic?.tvEarnCardViewGraphic?.text = getString(R.string.earn_percentage, porcEarn.toString())
+        binding?.includeCardGraphic?.tvSpendCardViewGraphic?.text = getString(R.string.spend_percentage, porcSpend.toString())
 
-        val porcSpend =  (spend * 100)/(earn)
-        val porcEarn = 100.0F - porcSpend
+
         binding?.includeCardGraphic?.piechart?.addPieSlice(
             PieModel(
                 "Ganhos", porcEarn,

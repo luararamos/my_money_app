@@ -15,6 +15,8 @@
     <string name="user_name">Ex: Ana Luisa</string>
     <string name="txtearn">Ganho</string>
     <string name="txtspend">Despesa</string>
+    <string name="earn_percentage">Ganho ( %1$s )</string>
+    <string name="spend_percentage">Despesa ( %1$s )</string>
     <string name="statement">Extrato:</string>
     <string name="txt_password_visibility_gone">*****</string>
     <string name="txt_mensage_error_without_money">Você está sem dinheiro</string>

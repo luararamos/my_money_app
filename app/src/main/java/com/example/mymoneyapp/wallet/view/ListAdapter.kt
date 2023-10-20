@@ -47,7 +47,7 @@ class ListAdapter(
             }
 
             itemView.setOnClickListener {
-                listener?.onClickDelete(item.id, item.type)
+                listener?.onClickDelete(item)
             }
 
 

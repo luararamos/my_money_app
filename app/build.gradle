@@ -57,6 +57,7 @@ dependencies {
     // Chart and graph library
     implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'androidx.databinding:databinding-common:8.1.2'
 
     def room_version = "2.4.2"
     implementation "androidx.room:room-runtime:$room_version"
