@@ -65,8 +65,6 @@ class HomeActivity : AppCompatActivity(), Wallet.HomeView, RegisterUser.View {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         hideWithAppBarLayout(binding.cardvisibilityActivityHome, binding.txtNameUser, binding.homeFragmentActivityHome, binding.fabActivityHome,binding.appBarActivityHome)
-//        hideWithAppBarLayout(binding.txtNameUser, binding.appBarActivityHome)
-//        hideWithAppBarLayout(binding.fabActivityHome, binding.appBarActivityHome)
 
         mainViewModel.selectedItem.observe(this, Observer {statement ->
             presenter.deleteStatement(statement.id)
